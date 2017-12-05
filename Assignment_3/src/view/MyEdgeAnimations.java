@@ -1,17 +1,15 @@
 package view;
 
 import javafx.animation.Animation;
+import javafx.animation.FillTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.SequentialTransition;
-import javafx.animation.Transition;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
+import java.util.*;
 
 public class MyEdgeAnimations {
 
@@ -41,14 +39,16 @@ public class MyEdgeAnimations {
 
         ParallelTransition parallelTransition = new ParallelTransition();
         Group animationNodes = new Group();
-        for (MyRootPathView path : treeView.getRootPathViews().values()) {
+        ArrayList<MyRootPathView> rootPaths = new ArrayList<MyRootPathView>(treeView.getRootPathViews().values());
+        Collections.sort(rootPaths, new MyEdgeAnimations.PathComparator());
+        for (MyRootPathView path : rootPaths) {
 
             SequentialTransition sequentialTransition = new SequentialTransition();
             for (MyEdgeView e : path.getEdges()) {
 
                 // creating path transition for each edge
-                int level = path.getEdges().indexOf(e);
-                int radius = (path.getEdges().size() - level + 1) * MyTreeView.NODE_RADIUS;
+                int egdeIndex = path.getEdges().indexOf(e);
+                int radius = (path.getEdges().size() - egdeIndex + 1) * MyTreeView.NODE_RADIUS;
                 Duration duration = cmpDurations(totalDuration, path.getLength(), e);
                 Object[] animationResult = e.setUpAnimation(radius, Color.GOLD, Color.DARKRED, duration);
 
@@ -78,6 +78,17 @@ public class MyEdgeAnimations {
         double s = totalDuration.toSeconds() * p;
 
         return Duration.seconds(s);
+
+    }
+
+    static class PathComparator implements Comparator<MyRootPathView> {
+
+        @Override
+        public int compare(MyRootPathView p1, MyRootPathView p2) {
+            int s1 = p1.getEdges().size();
+            int s2 = p2.getEdges().size();
+            return Integer.compare(s1, s2);
+        }
 
     }
 }

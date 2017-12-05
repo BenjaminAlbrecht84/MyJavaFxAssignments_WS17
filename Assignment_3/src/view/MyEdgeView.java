@@ -15,6 +15,7 @@ import javafx.util.Duration;
 public class MyEdgeView extends Group {
 
     private DoubleBinding length;
+
     private MyNodeView source, target;
     private MyTreeView.EDGE_TYPE edgeType;
     private Shape shape;
@@ -30,20 +31,20 @@ public class MyEdgeView extends Group {
     }
 
     private void setUpBindings() {
-        NumberBinding a = source.xProperty().subtract(target.xProperty());
-        NumberBinding b = source.yProperty().subtract(target.yProperty());
-        NumberBinding a2 = a.multiply(a);
-        NumberBinding b2 = b.multiply(b);
-        NumberBinding a2b2 = a2.add(b2);
+
         length = new DoubleBinding() {
             {
-                this.bind(a2b2);
+                bind(source.xProperty(), source.yProperty(), target.xProperty(), target.yProperty());
             }
+
             @Override
             protected double computeValue() {
-                return Math.sqrt(a2b2.doubleValue());
+                double a = source.xProperty().get() - target.xProperty().get();
+                double b = source.yProperty().get() - target.yProperty().get();
+                return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
             }
         };
+
     }
 
     public Object[] setUpAnimation(int radius, Color c1, Color c2, Duration duration) {

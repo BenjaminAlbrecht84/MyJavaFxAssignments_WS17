@@ -13,7 +13,7 @@ import presenter.Presenter;
 
 import java.util.ArrayList;
 
-public class View extends BorderPane {
+public class MyView extends BorderPane {
 
     private Presenter presenter;
     private Button animation1, animation2;
@@ -22,7 +22,7 @@ public class View extends BorderPane {
     private Pane treePane;
     private ScrollPane scrollPane;
 
-    public View() {
+    public MyView() {
         settingUpCenter();
         settingUpRight();
     }

@@ -12,20 +12,20 @@ import model.MyTree;
 import util.TreeParser;
 import view.MyNodeView;
 import view.MyTreeView;
-import view.View;
+import view.MyView;
 
 import java.io.File;
 import java.util.HashMap;
 
 public class Presenter {
 
-    private View view;
+    private MyView view;
 
     private HashMap<String, int[]> idToCoordinate;
     private MyTree tree;
     private MyTreeView treeView;
 
-    public Presenter(View view) {
+    public Presenter(MyView view) {
         this.view = view;
         view.setPresenter(this);
         setUpFields();

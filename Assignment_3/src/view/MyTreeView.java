@@ -24,9 +24,9 @@ public class MyTreeView extends Group {
     private Group edgeViewGroup = new Group();
     private Group animationGroup = new Group();
 
-    private View view;
+    private MyView view;
 
-    public MyTreeView(View view) {
+    public MyTreeView(MyView view) {
         this.view = view;
         getChildren().addAll(edgeViewGroup);
         getChildren().addAll(nodeViewGroup);
@@ -122,7 +122,7 @@ public class MyTreeView extends Group {
         return animationGroup;
     }
 
-    public View getView() {
+    public MyView getView() {
         return view;
     }
 
